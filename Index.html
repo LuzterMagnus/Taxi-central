@@ -1,0 +1,606 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Taxi Central Transportation - San Luis & Yuma</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        taxiYellow: '#FDB913',  // Amarillo/Dorado oficial
+                        taxiDark: '#000000',    // Negro absoluto
+                        taxiGreen: '#10B981',   // Verde distintivo del cliente (primario)
+                        taxiGreenDark: '#047857', // Verde oscuro para estados activos
+                        taxiLight: '#FFFFFF'    // Blanco puro
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        title: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Estilo estricto para simular formato de celular vertical (9:16) */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #000000;
+            color: #f8fafc;
+            max-width: 480px; /* Ancho de smartphone portrait */
+            margin: 0 auto;
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.2); /* Sombra con resplandor verde sutil */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* Patrón clásico de bandera de cuadros (Checkerboard) */
+        .checkerboard-strip {
+            height: 12px;
+            background: conic-gradient(#000000 0.25turn, #ffffff 0.25turn 0.5turn, #000000 0.5turn 0.75turn, #ffffff 0.75turn) 
+                        0 0 / 16px 12px;
+        }
+
+        /* Patrón de cuadros de color verde y negro para detalles especiales */
+        .checkerboard-green {
+            height: 8px;
+            background: conic-gradient(#000000 0.25turn, #10B981 0.25turn 0.5turn, #000000 0.5turn 0.75turn, #10B981 0.75turn) 
+                        0 0 / 16px 8px;
+        }
+        
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .tab-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- DECORATIVO: CINTA DE BANDERA DE CUADROS SUPERIOR -->
+    <div class="checkerboard-strip w-full"></div>
+
+    <!-- BARRA DE INFORMACIÓN DE MARCA CON TONOS VERDES -->
+    <div class="bg-taxiDark text-white text-xs font-semibold px-4 py-2 flex justify-between items-center border-b border-zinc-900">
+        <div class="flex items-center gap-1.5 text-taxiGreen">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="text-[11px] text-zinc-300">San Luis & Yuma, AZ</span>
+        </div>
+        <div class="flex gap-3 text-zinc-400">
+            <a href="https://facebook.com" target="_blank" class="hover:text-taxiGreen"><i class="fa-brands fa-facebook text-sm"></i></a>
+            <a href="https://wa.me/181254781134445" target="_blank" class="hover:text-taxiGreen"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+            <span class="text-[10px] bg-zinc-900 text-taxiGreen px-2.5 py-0.5 rounded-full font-bold border border-taxiGreen/30">ESPAÑOL</span>
+        </div>
+    </div>
+
+    <!-- NAVBAR PREMIUM CON IDENTIDAD REFORZADA -->
+    <header class="sticky top-0 bg-black/95 backdrop-blur-md border-b border-zinc-800 z-40 px-4 py-3.5 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <!-- Icono con bandera de cuadros y logo verde-amarillo -->
+            <div class="bg-taxiGreen p-1 rounded border border-white">
+                <span class="font-black text-black text-xs px-1 py-0.5 border border-black/40 block rounded bg-white">TC</span>
+            </div>
+            <div>
+                <span class="font-title font-black text-white text-sm tracking-tight block leading-none">TAXI CENTRAL</span>
+                <span class="text-[9px] text-taxiYellow font-bold tracking-widest uppercase">Transportation</span>
+            </div>
+        </div>
+        
+        <!-- Botón de acción rápida en color Verde Distintivo -->
+        <a href="tel:+181254781134445" class="bg-taxiGreen hover:bg-taxiGreenDark text-white font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1.5 shadow-lg shadow-emerald-950/50 active:scale-95 transition-all border border-emerald-400/20">
+            <i class="fa-solid fa-phone"></i>
+            <span>Llamar</span>
+        </a>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow pb-24">
+
+        <!-- HERO SECTION (Estilo 9:16 con fondo y bandera de cuadros degradada) -->
+        <section class="relative h-[460px] flex items-center justify-center text-center px-6 overflow-hidden">
+            <!-- Imagen de Fondo de Taxis Locales -->
+            <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600'); filter: brightness(0.18) contrast(1.2);"></div>
+            
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-black z-5"></div>
+
+            <div class="relative z-10 w-full flex flex-col items-center">
+                <!-- Distintivo Verde de Experiencia -->
+                <span class="bg-taxiGreen/10 border border-taxiGreen/40 text-taxiGreen text-[10px] uppercase font-bold tracking-widest px-3.5 py-1.5 rounded-md mb-4 flex items-center gap-1.5 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-taxiGreen animate-ping"></span> 11 Años Conectando la Frontera
+                </span>
+                
+                <h1 class="font-title font-extrabold text-3.5xl text-white leading-tight mb-2">
+                    Tu Conexión Segura en <br>
+                    <span class="text-taxiYellow">San Luis y Yuma</span>
+                </h1>
+                
+                <p class="text-xs text-zinc-300 max-w-sm mb-6 leading-relaxed">
+                    Viajes de confianza con choferes profesionales. Siempre puntuales, siempre seguros y en tu propio idioma.
+                </p>
+
+                <!-- Botones Móviles Clave de Acción Inmediata (Verde Dominante) -->
+                <div class="flex flex-col gap-2.5 w-full max-w-xs">
+                    <a href="https://wa.me/181254781134445?text=Hola,%20quisiera%20reservar%20un%20servicio%20de%20transporte%20por%20favor." target="_blank" class="bg-taxiGreen hover:bg-taxiGreenDark text-white font-bold text-sm py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all border border-emerald-400/30">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Reserva Express por WhatsApp</span>
+                    </a>
+                    <a href="#cotizador" class="bg-zinc-950 hover:bg-zinc-900 text-white border border-zinc-800 font-semibold text-xs py-3 px-6 rounded-xl active:scale-95 transition-all">
+                        <i class="fa-solid fa-calculator text-taxiYellow mr-1"></i> Calcular Tarifa del Viaje
+                    </a>
+                </div>
+
+                <!-- Insignias Rápidas de Confianza con Iconos Verdes -->
+                <div class="grid grid-cols-3 gap-2 w-full mt-8 border-t border-zinc-900 pt-4 text-[10px] text-zinc-400">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-square-check text-taxiGreen text-base mb-1"></i>
+                        <span>Puntualidad de 11 Años</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-truck-ramp-box text-taxiGreen text-base mb-1"></i>
+                        <span>Delivery de Paquetes</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-users-viewfinder text-taxiGreen text-base mb-1"></i>
+                        <span>Trato Amigable</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETALLE VISUAL: SEPARADOR DE BANDERA DE CUADROS VERDE-NEGRO -->
+        <div class="checkerboard-green w-full"></div>
+
+        <!-- SECCIÓN DE NUEVOS ELEMENTOS VISUALES REALES -->
+        <section class="py-10 px-4 bg-zinc-950 border-b border-zinc-900">
+            <h2 class="font-title font-extrabold text-2xl text-center text-white mb-1">Nuestra Flota</h2>
+            <p class="text-center text-xs text-zinc-400 mb-6">Fotografías de nuestros vehículos circulando en San Luis y Yuma</p>
+
+            <!-- Grid de Fotos Reales de Vehículos (Con marcos estilo bandera de cuadros y acentos verdes) -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="relative bg-zinc-900 rounded-xl overflow-hidden aspect-video border border-zinc-800">
+                    <!-- Detalle de bandera de cuadros superior en foto -->
+                    <div class="checkerboard-strip absolute top-0 inset-x-0 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=300" alt="Flota de Taxis" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex items-end p-2.5">
+                        <span class="text-[10px] font-bold text-taxiYellow flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-taxiGreen"></span> Taxi Central Estándar
+                        </span>
+                    </div>
+                </div>
+                <div class="relative bg-zinc-900 rounded-xl overflow-hidden aspect-video border border-zinc-800">
+                    <!-- Detalle de bandera de cuadros superior en foto -->
+                    <div class="checkerboard-strip absolute top-0 inset-x-0 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=300" alt="Personal y Choferes" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex items-end p-2.5">
+                        <span class="text-[10px] font-bold text-taxiYellow flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-taxiGreen"></span> Unidades Amplias
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulación de Video Corto del Servicio propuesto por el cliente -->
+            <div class="bg-zinc-900 rounded-xl p-4 border border-zinc-800 text-center">
+                <div class="relative aspect-video rounded-lg overflow-hidden bg-black flex items-center justify-center mb-3">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://images.unsplash.com/photo-1492664738985-f36e4775b02b?auto=format&fit=crop&q=80&w=300');"></div>
+                    <!-- Play Button en Verde Distintivo -->
+                    <button class="z-10 bg-taxiGreen text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+                        <i class="fa-solid fa-play text-lg ml-1"></i>
+                    </button>
+                    <span class="absolute bottom-2 right-2 bg-black/85 text-[9px] px-2 py-0.5 rounded text-zinc-300 font-bold border border-zinc-800">0:30 seg</span>
+                    <div class="checkerboard-strip absolute bottom-0 inset-x-0"></div>
+                </div>
+                <h4 class="font-bold text-xs text-white mb-1">Video: Traslados Rápidos y Seguros</h4>
+                <p class="text-[10px] text-zinc-400">Mira cómo coordinamos nuestros viajes cotidianos y el cuidado de tu traslado.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE SERVICIOS INTERACTIVOS (Comunidad y Corporativo con diseño de bandera) -->
+        <section class="py-10 px-4 bg-zinc-900 border-t border-zinc-800">
+            <h2 class="text-center font-title font-extrabold text-2xl text-white mb-2">Servicios que Ofrecemos</h2>
+            <p class="text-center text-xs text-zinc-400 mb-6">Trato de confianza para ti, formalidad absoluta para empresas</p>
+
+            <!-- Selector de Pestañas con temática de bandera de cuadros en el borde -->
+            <div class="p-1.5 rounded-xl bg-black border border-zinc-800 mb-6">
+                <div class="flex gap-1.5">
+                    <button onclick="switchTab('comunidad')" id="tab-comunidad" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-taxiGreen text-white tab-transition">
+                        <i class="fa-solid fa-taxi block text-base mb-0.5"></i>
+                        Comunidad B2C
+                    </button>
+                    <button onclick="switchTab('corporativo')" id="tab-corporativo" class="flex-1 text-center py-2.5 text-xs font-bold text-zinc-400 rounded-lg tab-transition">
+                        <i class="fa-solid fa-building block text-base mb-0.5"></i>
+                        Corporativo B2B
+                    </button>
+                    <button onclick="switchTab('delivery')" id="tab-delivery" class="flex-1 text-center py-2.5 text-xs font-bold text-zinc-400 rounded-lg tab-transition">
+                        <i class="fa-solid fa-truck-ramp-box block text-base mb-0.5"></i>
+                        Delivery Local
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTENIDO DE LAS PESTAÑAS -->
+            <!-- Pestaña 1: Comunidad B2C -->
+            <div id="content-comunidad" class="bg-zinc-950 rounded-2xl p-5 border border-zinc-850 relative overflow-hidden">
+                <div class="absolute top-0 inset-x-0 checkerboard-strip"></div>
+                <div class="flex justify-between items-start mb-4 mt-2">
+                    <div>
+                        <span class="text-[10px] bg-taxiGreen/20 text-taxiGreen px-2.5 py-1 rounded font-bold uppercase tracking-wider">Servicio Familiar</span>
+                        <h3 class="font-title font-bold text-lg text-white mt-2">Viajes Diarios Locales</h3>
+                    </div>
+                </div>
+                <p class="text-xs text-zinc-300 leading-relaxed mb-4">
+                    Te acompañamos al supermercado, a visitar a la familia, o a tus traslados diarios en San Luis y Yuma. Choferes amigables, puntuales y con la amabilidad y respeto de siempre.
+                </p>
+                <ul class="space-y-2.5 text-xs text-zinc-400 mb-5">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Tarifas fijas garantizadas sin sorpresas dinámicas</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Servicio ininterrumpido las veinticuatro siete</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Choferes bilingües de excelente confianza local</li>
+                </ul>
+                <a href="https://wa.me/181254781134445?text=Hola,%20necesito%20un%20servicio%20de%20taxi%20comunidad." target="_blank" class="w-full bg-taxiGreen hover:bg-taxiGreenDark text-white font-bold text-xs py-3.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+                    <span>Llamar un Taxi de Inmediato</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Pestaña 2: Corporativo B2B -->
+            <div id="content-corporativo" class="bg-zinc-950 rounded-2xl p-5 border border-zinc-850 relative overflow-hidden hidden">
+                <div class="absolute top-0 inset-x-0 checkerboard-strip"></div>
+                <div class="flex justify-between items-start mb-4 mt-2">
+                    <div>
+                        <span class="text-[10px] bg-taxiYellow/20 text-taxiYellow px-2.5 py-1 rounded font-bold uppercase tracking-wider">Transporte de Personal</span>
+                        <h3 class="font-title font-bold text-lg text-white mt-2">Servicios para Empresas</h3>
+                    </div>
+                </div>
+                <p class="text-xs text-zinc-300 leading-relaxed mb-4">
+                    La solución profesional que tu negocio necesita en la frontera. Transportamos a tus trabajadores o personal agrícola a sus horarios de entrada y salida con máxima puntualidad.
+                </p>
+                <ul class="space-y-2.5 text-xs text-zinc-400 mb-5">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Facturación mensual clara y ordenada para tu empresa</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Coordinación de rutas recurrentes según tus turnos</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Vehículos de gran capacidad y chóferes profesionales</li>
+                </ul>
+                <a href="#b2b-form" class="w-full bg-taxiYellow hover:bg-yellow-500 text-black font-extrabold text-xs py-3.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+                    <span>Solicitar Convenio Corporativo</span>
+                    <i class="fa-solid fa-building-user"></i>
+                </a>
+            </div>
+
+            <!-- Pestaña 3: Delivery Local -->
+            <div id="content-delivery" class="bg-zinc-950 rounded-2xl p-5 border border-zinc-850 relative overflow-hidden hidden">
+                <div class="absolute top-0 inset-x-0 checkerboard-strip"></div>
+                <div class="flex justify-between items-start mb-4 mt-2">
+                    <div>
+                        <span class="text-[10px] bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded font-bold uppercase tracking-wider">Entrega Veloz</span>
+                        <h3 class="font-title font-bold text-lg text-white mt-2">Envío de Paquetes y Comida</h3>
+                    </div>
+                </div>
+                <p class="text-xs text-zinc-300 leading-relaxed mb-4">
+                    ¿Necesitas enviar un paquete o traer tu comida favorita a casa? Nosotros nos encargamos de ir por ella y entregártela en la puerta de tu hogar o negocio con total seguridad.
+                </p>
+                <ul class="space-y-2.5 text-xs text-zinc-400 mb-5">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Alianzas directas con restaurantes y comercios locales</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Entregas rápidas con rastreo y llamadas del chofer</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-taxiGreen text-sm"></i> Tarifas sumamente accesibles por kilometraje</li>
+                </ul>
+                <a href="https://wa.me/181254781134445?text=Hola,%20quisiera%20solicitar%20un%20servicio%20de%20delivery." target="_blank" class="w-full bg-white text-black font-bold text-xs py-3.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+                    <span>Pedir un Delivery Express</span>
+                    <i class="fa-solid fa-box-open"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CALCULADORA DE TARIFAS REDISEÑADA (Verde, Amarillo y Cuadros) -->
+        <section id="cotizador" class="py-10 px-4 bg-zinc-950 border-t border-zinc-900">
+            <h2 class="text-center font-title font-extrabold text-2xl text-white mb-2">Calculadora de Tarifas</h2>
+            <p class="text-center text-xs text-zinc-400 mb-6">Calcula el costo aproximado de tu viaje al instante</p>
+
+            <div class="bg-zinc-900 rounded-2xl p-5 border border-zinc-800 relative overflow-hidden">
+                <div class="absolute top-0 inset-x-0 checkerboard-strip"></div>
+                
+                <div class="mb-4 mt-2">
+                    <label class="block text-xs font-semibold text-zinc-400 mb-1.5">Punto de Salida</label>
+                    <select id="origen" class="w-full bg-black text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none font-sans" onchange="calcularEstimado()">
+                        <option value="san-luis">San Luis, Arizona (Centro)</option>
+                        <option value="san-luis-frontera">San Luis Port of Entry (Frontera)</option>
+                        <option value="yuma-medical">Yuma (Hospital Regional)</option>
+                        <option value="yuma-airport">Aeropuerto de Yuma (YUM)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-semibold text-zinc-400 mb-1.5">Destino Final</label>
+                    <select id="destino" class="w-full bg-black text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none font-sans" onchange="calcularEstimado()">
+                        <option value="yuma-medical">Yuma (Hospital Regional)</option>
+                        <option value="san-luis-frontera">San Luis Port of Entry (Frontera)</option>
+                        <option value="san-luis">San Luis, Arizona (Centro)</option>
+                        <option value="yuma-airport">Aeropuerto de Yuma (YUM)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xs font-semibold text-zinc-400 mb-1.5">Tipo de Viaje</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="bg-black border border-zinc-850 rounded-lg p-3 flex items-center gap-2 cursor-pointer text-xs">
+                            <input type="radio" name="tipo_servicio" value="estandar" checked onchange="calcularEstimado()" class="accent-taxiGreen">
+                            <div>
+                                <span class="block text-white font-bold">Viaje Sencillo</span>
+                                <span class="text-[9px] text-zinc-500">Tarifa fija estándar</span>
+                            </div>
+                        </label>
+                        <label class="bg-black border border-zinc-850 rounded-lg p-3 flex items-center gap-2 cursor-pointer text-xs">
+                            <input type="radio" name="tipo_servicio" value="corporativo" onchange="calcularEstimado()" class="accent-taxiGreen">
+                            <div>
+                                <span class="block text-white font-bold">Corporativo B2B</span>
+                                <span class="text-[9px] text-zinc-500">Viaje de personal</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tarifa Calculada con bordes verdes -->
+                <div class="bg-black rounded-xl p-4 border border-zinc-800 text-center mb-4 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-taxiGreen"></div>
+                    <span class="text-[9px] text-zinc-500 uppercase tracking-widest block mb-1">Precio Estimado</span>
+                    <span id="tarifa-resultado" class="font-title font-black text-3.5xl text-taxiYellow">$35.00</span>
+                    <span class="text-[9px] text-zinc-500 block mt-1">*Tarifa fija para tu total tranquilidad</span>
+                </div>
+
+                <button onclick="enviarCotizacionWhatsApp()" class="w-full bg-taxiGreen hover:bg-taxiGreenDark text-white font-bold text-xs py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Confirmar Viaje por WhatsApp</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CONTRATO B2B (Convenios comerciales con empresas locales) -->
+        <section id="b2b-form" class="py-10 px-4 bg-zinc-900 border-t border-zinc-800">
+            <div class="text-center mb-6">
+                <span class="text-xs text-taxiGreen font-bold uppercase tracking-widest">Socio Estratégico</span>
+                <h2 class="font-title font-extrabold text-2xl text-white mt-1">Convenios Comerciales</h2>
+                <p class="text-xs text-zinc-400 mt-1.5">Si representas una empresa agrícola, comercial, hotel o restaurante en Yuma o San Luis, sé nuestro aliado comercial.</p>
+            </div>
+
+            <div class="bg-zinc-950 rounded-2xl p-5 border border-zinc-800 relative">
+                <div class="absolute top-0 inset-x-0 checkerboard-strip"></div>
+                
+                <form id="alianzaForm" onsubmit="enviarAlianza(event)" class="mt-2">
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Nombre de la Empresa</label>
+                        <input type="text" id="b2b-empresa" placeholder="Ej. Agrícola del Valle de San Luis" required class="w-full bg-zinc-900 text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none">
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Nombre de Contacto Directo</label>
+                        <input type="text" id="b2b-contacto" placeholder="Ej. Ing. Samuel Lozano" required class="w-full bg-zinc-900 text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none">
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Tipo de Convenio Necesario</label>
+                        <select id="b2b-servicio" class="w-full bg-zinc-900 text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none">
+                            <option value="corporativo">Transporte Programado de Trabajadores</option>
+                            <option value="convenio">Convenio Mensual de Taxi Regular</option>
+                            <option value="delivery">Alianza de Delivery a Domicilio</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Teléfono de Oficina / Celular</label>
+                        <input type="tel" id="b2b-telefono" placeholder="Ej. +1 928 555-0155" required class="w-full bg-zinc-900 text-white text-xs rounded-lg p-3 border border-zinc-800 focus:border-taxiGreen outline-none">
+                    </div>
+
+                    <!-- Mensaje informativo de éxito en memoria -->
+                    <div id="mensaje-exito" class="hidden mb-4 p-3 bg-taxiGreen/20 text-taxiGreen text-xs rounded-lg border border-taxiGreen/40 text-center">
+                        <i class="fa-solid fa-circle-check mr-1.5"></i> ¡Redirigiendo al WhatsApp de Servicios Corporativos!
+                    </div>
+
+                    <button type="submit" class="w-full bg-taxiGreen hover:bg-taxiGreenDark text-white font-extrabold text-xs py-3.5 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span>Solicitar Información de Convenio</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CONFIANZA Y OPINIONES DE LA COMUNIDAD -->
+        <section class="py-10 px-4 bg-zinc-950 border-t border-zinc-900">
+            <h2 class="text-center font-title font-extrabold text-2xl text-white mb-2">Historias de Éxito</h2>
+            <p class="text-center text-xs text-zinc-400 mb-6">Nuestros clientes de San Luis y Yuma respaldan nuestro servicio</p>
+
+            <div class="space-y-4">
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 relative">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-taxiGreen"></div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-xs text-white">Doña María J. (San Luis, AZ)</span>
+                        <div class="text-taxiYellow text-[10px] flex gap-0.5">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-zinc-300 italic leading-relaxed">"Son muy puntuales para llevarme al supermercado. Los choferes son siempre muy amables conmigo, me ayudan con las bolsas de mandado y hablan excelente español."</p>
+                </div>
+                
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 relative">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-taxiGreen"></div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-xs text-white">Administración Agrícola (Yuma)</span>
+                        <div class="text-taxiYellow text-[10px] flex gap-0.5">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-zinc-300 italic leading-relaxed">"Excelente servicio corporativo. Coordinamos el transporte diario de nuestro personal en la frontera y siempre están listos a tiempo. La facturación es muy clara."</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- DETALLE VISUAL: CINTA DE BANDERA DE CUADROS ANTES DEL FOOTER -->
+    <div class="checkerboard-strip w-full"></div>
+
+    <!-- FOOTER MÓVIL OPTIMIZADO -->
+    <footer class="bg-black border-t border-zinc-900 px-6 py-6 text-center text-xs text-zinc-500">
+        <p class="font-bold text-white mb-2 text-sm uppercase tracking-wide">Taxi Central Transportation</p>
+        <p class="max-w-xs mx-auto mb-4 text-zinc-400 leading-relaxed text-[11px]">
+            Conectando comunidades con servicio veinticuatro siete en San Luis y Yuma, Arizona. Once años de experiencia.
+        </p>
+        <div class="flex justify-center gap-4 text-zinc-400 mb-6 text-sm">
+            <a href="tel:+181254781134445" class="hover:text-taxiGreen"><i class="fa-solid fa-phone"></i></a>
+            <a href="https://wa.me/181254781134445" class="hover:text-taxiGreen"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://facebook.com" class="hover:text-taxiGreen"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+        <div class="border-t border-zinc-900 pt-4 text-[10px]">
+            <span>© 2026 Taxi Central Transportation. Todos los derechos reservados.</span>
+            <span class="block mt-1 text-taxiGreen font-bold">Diseño estratégico por Ajedrez Marketing</span>
+        </div>
+    </footer>
+
+    <!-- NAVBAR PERSISTENTE DE ACCIÓN RÁPIDA (Mobile Tab-Bar) -->
+    <div class="fixed bottom-0 inset-x-0 max-w-[480px] mx-auto bg-black/95 backdrop-blur-md border-t border-zinc-900 p-2.5 flex justify-around items-center z-50">
+        <a href="tel:+181254781134445" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-taxiGreen transition-colors">
+            <i class="fa-solid fa-phone text-lg"></i>
+            <span class="text-[9px] font-semibold">Llamar 24/7</span>
+        </a>
+        
+        <!-- Botón del centro destacado (WhatsApp en Verde Corporativo) -->
+        <a href="https://wa.me/181254781134445?text=Hola,%20quisiera%20pedir%20un%20Taxi%20Central%20de%20inmediato." target="_blank" class="bg-taxiGreen text-white p-3 rounded-full shadow-lg shadow-emerald-500/30 transform -translate-y-5 flex items-center justify-center border-4 border-black active:scale-95 transition-all">
+            <i class="fa-brands fa-whatsapp text-xl"></i>
+        </a>
+
+        <a href="#cotizador" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-taxiGreen transition-colors">
+            <i class="fa-solid fa-calculator text-lg"></i>
+            <span class="text-[9px] font-semibold">Precios</span>
+        </a>
+    </div>
+
+    <!-- SCRIPTS DE INTERACCIÓN -->
+    <script>
+        // Tabla de tarifas estimadas basadas en origen-destino para el cotizador
+        const matrizTarifas = {
+            'san-luis': {
+                'yuma-medical': 35.00,
+                'san-luis-frontera': 10.00,
+                'san-luis': 7.00,
+                'yuma-airport': 40.00
+            },
+            'san-luis-frontera': {
+                'yuma-medical': 38.00,
+                'san-luis-frontera': 0.00,
+                'san-luis': 10.00,
+                'yuma-airport': 42.00
+            },
+            'yuma-medical': {
+                'yuma-medical': 0.00,
+                'san-luis-frontera': 38.00,
+                'san-luis': 35.00,
+                'yuma-airport': 15.00
+            },
+            'yuma-airport': {
+                'yuma-medical': 15.00,
+                'san-luis-frontera': 42.00,
+                'san-luis': 40.00,
+                'yuma-airport': 0.00
+            }
+        };
+
+        // Función para cambiar de pestañas en los servicios
+        function switchTab(tabId) {
+            // Ocultar todos los contenidos
+            document.getElementById('content-comunidad').classList.add('hidden');
+            document.getElementById('content-corporativo').classList.add('hidden');
+            document.getElementById('content-delivery').classList.add('hidden');
+
+            // Resetear estilos de los botones
+            const tabs = ['comunidad', 'corporativo', 'delivery'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                btn.className = 'flex-1 text-center py-2.5 text-xs font-bold rounded-lg text-zinc-400 tab-transition';
+            });
+
+            // Mostrar el contenido seleccionado y destacar su botón en color verde distintivo
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.className = 'flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-taxiGreen text-white tab-transition';
+        }
+
+        // Calcular estimado dinámicamente
+        function calcularEstimado() {
+            const origen = document.getElementById('origen').value;
+            const destino = document.getElementById('destino').value;
+            const tipoServicio = document.querySelector('input[name="tipo_servicio"]:checked').value;
+
+            if (origen === destino) {
+                document.getElementById('tarifa-resultado').textContent = "$7.00";
+                return;
+            }
+
+            let baseTarifa = matrizTarifas[origen][destino] || 15.00;
+
+            // Ajuste por tipo corporativo
+            if (tipoServicio === 'corporativo') {
+                baseTarifa = baseTarifa + 5.00; // Recargo logístico por grupo / parada adicional
+            }
+
+            document.getElementById('tarifa-resultado').textContent = `$${baseTarifa.toFixed(2)}`;
+        }
+
+        // Enviar cotización prellenada por WhatsApp
+        function enviarCotizacionWhatsApp() {
+            const origenSelect = document.getElementById('origen');
+            const destinoSelect = document.getElementById('destino');
+            
+            const origenTexto = origenSelect.options[origenSelect.selectedIndex].text;
+            const destinoTexto = destinoSelect.options[destinoSelect.selectedIndex].text;
+            
+            const tipoServicio = document.querySelector('input[name="tipo_servicio"]:checked').value;
+            const tarifa = document.getElementById('tarifa-resultado').textContent;
+
+            const mensaje = `Hola Taxi Central, coticé una tarifa en su sitio web:\n\n📍 Origen: ${origenTexto}\n🏁 Destino: ${destinoTexto}\n🚗 Tipo: ${tipoServicio === 'corporativo' ? 'Corporativo B2B' : 'Sencillo Local'}\n💵 Tarifa Estimada: ${tarifa}\n\n¿Tienen chofer libre?`;
+            
+            const url = `https://wa.me/181254781134445?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        // Manejar el formulario B2B enviándolo a WhatsApp
+        function enviarAlianza(event) {
+            event.preventDefault();
+            const empresa = document.getElementById('b2b-empresa').value;
+            const contacto = document.getElementById('b2b-contacto').value;
+            const servicioSelect = document.getElementById('b2b-servicio');
+            const servicioTexto = servicioSelect.options[servicioSelect.selectedIndex].text;
+            const telefono = document.getElementById('b2b-telefono').value;
+
+            // Mostrar mensaje de éxito en pantalla
+            const bannerExito = document.getElementById('mensaje-exito');
+            bannerExito.classList.remove('hidden');
+
+            const mensaje = `Hola Taxi Central, me interesa coordinar un convenio comercial:\n\n🏢 Empresa: ${empresa}\n👤 Contacto: ${contacto}\n📋 Requerimiento: ${servicioTexto}\n📞 Teléfono: ${telefono}\n\nQuedo a la espera de su llamada para programar una reunión comercial.`;
+
+            const url = `https://wa.me/181254781134445?text=${encodeURIComponent(mensaje)}`;
+            
+            // Demorar la apertura de la ventana para permitir que el usuario vea la confirmación local
+            setTimeout(() => {
+                window.open(url, '_blank');
+                bannerExito.classList.add('hidden');
+                document.getElementById('alianzaForm').reset();
+            }, 1000);
+        }
+
+        // Inicializar el cálculo al cargar
+        window.onload = function() {
+            calcularEstimado();
+        }
+    </script>
+</body>
+</html>
+
+```
